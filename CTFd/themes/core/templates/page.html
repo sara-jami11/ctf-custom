@@ -1,0 +1,596 @@
+{% extends "base.html" %}
+
+{% block content %}
+  {% set is_fa = (get_locale() == 'fa') %}
+  {% if not page or page.route == "index" %}
+    <div class="ctf-landing">
+      <!-- 1. HERO SECTION -->
+      <section class="hero-section">
+        <div class="container">
+          <div class="row align-items-center g-5">
+            <div class="col-lg-6">
+              <div class="ctf-pill-tag">
+                <i class="fas fa-terminal"></i>
+                {% if is_fa %}مسابقه فتح پرچم{% else %}CAPTURE THE FLAG{% endif %}
+              </div>
+              <h1 class="hero-title">
+                {% if is_fa %}
+                  کلاس‌های خود را با <span class="highlight-cyan">CTFd</span> برگزار کنید
+                {% else %}
+                  Host your <span class="highlight-cyan">Classes</span> with CTFd
+                {% endif %}
+              </h1>
+              <p class="hero-subtitle">
+                {% if is_fa %}
+                  سیستم CTFd یک پلتفرم قدرتمند، انعطاف‌پذیر و مدرن برای برگزاری مسابقات امنیت سایبری و فتح پرچم (CTF) ویژه مراکز آموزشی، تیم‌ها و سازمان‌ها است.
+                {% else %}
+                  CTFd is a powerful, flexible, and easy-to-use platform for hosting Capture The Flag (CTF) competitions, perfect for educators, teams, and organizations.
+                {% endif %}
+              </p>
+              <div class="hero-actions">
+                {% if authed() %}
+                  <a href="{{ url_for('challenges.listing') }}" class="btn btn-primary px-4 py-2">
+                    {% if is_fa %}ورود به چالش‌ها{% else %}Go to Challenges{% endif %} <i class="fas fa-arrow-right ms-2"></i>
+                  </a>
+                {% else %}
+                  <a href="{{ url_for('auth.register') if registration_visible() else url_for('auth.login') }}" class="btn btn-primary px-4 py-2">
+                    {% if is_fa %}شروع کنید{% else %}Get Started{% endif %} <i class="fas fa-arrow-right ms-2"></i>
+                  </a>
+                {% endif %}
+                <a href="#features" class="btn btn-secondary px-4 py-2">
+                  {% if is_fa %}بررسی ویژگی‌ها{% else %}Explore Features{% endif %}
+                </a>
+              </div>
+              <div class="hero-meta">
+                <span class="meta-item">
+                  <i class="fab fa-github"></i>
+                  {% if is_fa %}متن‌باز{% else %}Open Source{% endif %}
+                </span>
+                <span class="meta-item">
+                  <i class="fas fa-bolt"></i>
+                  {% if is_fa %}راه‌اندازی آسان{% else %}Easy Setup{% endif %}
+                </span>
+                <span class="meta-item">
+                  <i class="fas fa-users"></i>
+                  {% if is_fa %}جامعه فعال{% else %}Active Community{% endif %}
+                </span>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="terminal-card">
+                <div class="terminal-header">
+                  <div class="dot red"></div>
+                  <div class="dot yellow"></div>
+                  <div class="dot green"></div>
+                </div>
+                <div class="terminal-body">
+                  <p class="mb-2"><span class="term-prompt">CTFd&gt;</span></p>
+                  <p class="mb-1 text-muted">&gt; create challenge</p>
+                  <p class="mb-1 text-muted">&gt; manage teams</p>
+                  <p class="mb-1 text-muted">&gt; track progress</p>
+                  <p class="mb-0 text-info fw-bold">&gt; build tomorrow</p>
+                </div>
+                <div class="terminal-badge">
+                  <i class="fas fa-shield-halved"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. OVERVIEW SECTION -->
+      <section class="overview-section" id="overview">
+        <div class="container">
+          <div class="row align-items-center g-5">
+            <div class="col-lg-6">
+              <div class="ctf-pill-tag">
+                <i class="fas fa-eye"></i>
+                {% if is_fa %}نمای کلی{% else %}OVERVIEW{% endif %}
+              </div>
+              <h2 class="section-title">
+                {% if is_fa %}
+                  <span class="highlight-cyan">CTFd</span> چیست؟
+                {% else %}
+                  What is <span class="highlight-cyan">CTFd</span>?
+                {% endif %}
+              </h2>
+              <p class="section-desc mb-4">
+                {% if is_fa %}
+                  سیستم CTFd پلتفرم استانداردی است که به شما امکان می‌دهد چالش‌های چنددسته‌ای را با سیستم امتیازدهی بلادرنگ، رتبه‌بندی زنده و محیطی کاملاً ایمن و حرفه‌ای در کوتاه‌ترین زمان اجرا کنید.
+                {% else %}
+                  CTFd is an open-source Capture The Flag (CTF) platform designed to make it easy to create and run CTF competitions. It supports a wide range of challenge types, real-time scoring, and an intuitive interface for both organizers and players.
+                {% endif %}
+              </p>
+              <a href="{{ url_for('challenges.listing') }}" class="btn btn-primary px-4">
+                {% if is_fa %}مشاهده چالش‌ها{% else %}Learn More{% endif %} <i class="fas fa-arrow-right ms-2"></i>
+              </a>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="mock-board">
+                <div class="board-header">
+                  <div class="brand-pill">
+                    <i class="fas fa-shield-halved text-primary"></i>
+                    <span>CTFd</span>
+                  </div>
+                  <div class="text-muted small">
+                    <i class="fas fa-circle text-success me-1"></i> Live
+                  </div>
+                </div>
+
+                <div class="board-categories">
+                  <span class="cat-pill active">All</span>
+                  <span class="cat-pill">Web</span>
+                  <span class="cat-pill">Crypto</span>
+                  <span class="cat-pill">Forensics</span>
+                  <span class="cat-pill">Pwn</span>
+                  <span class="cat-pill">Reverse</span>
+                </div>
+
+                <div class="chal-row">
+                  <div class="chal-info">
+                    <i class="fas fa-flag text-primary"></i>
+                    <span class="chal-name">Warmup</span>
+                  </div>
+                  <span class="chal-points">100 pts</span>
+                </div>
+
+                <div class="chal-row">
+                  <div class="chal-info">
+                    <i class="fas fa-key text-warning"></i>
+                    <span class="chal-name">Caesar Cipher</span>
+                    <span class="chal-cat">Crypto</span>
+                  </div>
+                  <span class="chal-points">200 pts</span>
+                </div>
+
+                <div class="chal-row">
+                  <div class="chal-info">
+                    <i class="fas fa-search text-info"></i>
+                    <span class="chal-name">Find the Flag</span>
+                    <span class="chal-cat">Forensics</span>
+                  </div>
+                  <span class="chal-points">150 pts</span>
+                </div>
+
+                <div class="chal-row">
+                  <div class="chal-info">
+                    <i class="fas fa-bug text-danger"></i>
+                    <span class="chal-name">Buffer Overflow</span>
+                    <span class="chal-cat">Pwn</span>
+                  </div>
+                  <span class="chal-points">250 pts</span>
+                </div>
+
+                <div class="chal-row">
+                  <div class="chal-info">
+                    <i class="fas fa-microchip text-success"></i>
+                    <span class="chal-name">Reverse Me</span>
+                    <span class="chal-cat">Reverse</span>
+                  </div>
+                  <span class="chal-points">300 pts</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. FEATURES SECTION -->
+      <section class="features-section" id="features">
+        <div class="container text-center">
+          <div class="ctf-pill-tag">
+            <i class="fas fa-layer-group"></i>
+            {% if is_fa %}ویژگی‌ها{% else %}FEATURES{% endif %}
+          </div>
+          <h2 class="section-title">
+            {% if is_fa %}همه چیزهایی که نیاز دارید{% else %}Everything You Need{% endif %}
+          </h2>
+          <p class="section-desc mx-auto">
+            {% if is_fa %}
+              از وب و کریپتو تا فارنزیک و اکسپلویت — تمام ابزارهای موردنیاز برای برگزاری و شرکت در مسابقات امنیت سایبری در اختیار شماست.
+            {% else %}
+              From web to crypto, forensics to pwn — CTFd provides all the tools you need to run and participate in CTF events, all in one place.
+            {% endif %}
+          </p>
+
+          <div class="features-grid text-start">
+            <div class="feature-card">
+              <div class="feature-icon-box">
+                <i class="fas fa-cube"></i>
+              </div>
+              <i class="fas fa-chevron-right feature-arrow"></i>
+              <h3 class="feature-title">
+                {% if is_fa %}چالش‌های چنددسته‌ای{% else %}Multi-Category Challenges{% endif %}
+              </h3>
+              <p class="feature-desc">
+                {% if is_fa %}پشتیبانی کامل از وب، رمزنگاری، فارنزیک، مهندسی معکوس و بیشتر.{% else %}Support for web, crypto, forensics, pwn, reverse and more.{% endif %}
+              </p>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon-box">
+                <i class="fas fa-trophy"></i>
+              </div>
+              <i class="fas fa-chevron-right feature-arrow"></i>
+              <h3 class="feature-title">
+                {% if is_fa %}امتیازدهی بلادرنگ{% else %}Real-time Scoring{% endif %}
+              </h3>
+              <p class="feature-desc">
+                {% if is_fa %}امتیازدهی زنده، جدول رتبه‌بندی پویا و نمودارهای پیشرفت دقیق.{% else %}Live scoring, dynamic leaderboards, and detailed analytics.{% endif %}
+              </p>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon-box">
+                <i class="fas fa-users-gear"></i>
+              </div>
+              <i class="fas fa-chevron-right feature-arrow"></i>
+              <h3 class="feature-title">
+                {% if is_fa %}مدیریت تیم‌ها{% else %}Team Management{% endif %}
+              </h3>
+              <p class="feature-desc">
+                {% if is_fa %}ایجاد و مدیریت ساده تیم‌ها، دعوت اعضا و کاپیتان‌ها.{% else %}Easily create and manage teams, player invitations, and captains.{% endif %}
+              </p>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon-box">
+                <i class="fas fa-puzzle-piece"></i>
+              </div>
+              <i class="fas fa-chevron-right feature-arrow"></i>
+              <h3 class="feature-title">
+                {% if is_fa %}افزونه‌ها و پلاگین‌ها{% else %}Extensions{% endif %}
+              </h3>
+              <p class="feature-desc">
+                {% if is_fa %}قابلیت توسعه با پلاگین‌های دلخواه و چالش‌های داینامیک.{% else %}Extend with custom plugins, integrations, and dynamic challenges.{% endif %}
+              </p>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon-box">
+                <i class="fas fa-shield-halved"></i>
+              </div>
+              <i class="fas fa-chevron-right feature-arrow"></i>
+              <h3 class="feature-title">
+                {% if is_fa %}رابط کاربری مدرن{% else %}Modern UI{% endif %}
+              </h3>
+              <p class="feature-desc">
+                {% if is_fa %}طراحی تمیز، واکنش‌گرا و بهینه‌سازی‌شده برای دسکتاپ و موبایل.{% else %}Clean and responsive design for the best competition experience.{% endif %}
+              </p>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon-box">
+                <i class="fas fa-comments"></i>
+              </div>
+              <i class="fas fa-chevron-right feature-arrow"></i>
+              <h3 class="feature-title">
+                {% if is_fa %}جامعه فعال{% else %}Active Community{% endif %}
+              </h3>
+              <p class="feature-desc">
+                {% if is_fa %}پشتیبانی‌شده توسط جامعه‌ای بزرگ از متخصصان امنیت سراسر جهان.{% else %}Backed by a growing open-source cybersecurity community.{% endif %}
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. QUICK START SECTION -->
+      <section class="quickstart-section">
+        <div class="container">
+          <div class="row align-items-center g-5">
+            <div class="col-lg-6">
+              <div class="code-box">
+                <div class="code-header">
+                  <div class="dot red"></div>
+                  <div class="dot yellow"></div>
+                  <div class="dot green"></div>
+                </div>
+                <pre><code><span class="comment"># 1. Clone the repository</span>
+<span class="cmd">$ git clone https://github.com/CTFd/CTFd.git</span>
+
+<span class="comment"># 2. Install dependencies</span>
+<span class="cmd">$ cd CTFd</span>
+<span class="cmd">$ pip install -r requirements.txt</span>
+
+<span class="comment"># 3. Run the platform</span>
+<span class="cmd">$ python run.py</span></code></pre>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="ctf-pill-tag">
+                <i class="fas fa-play"></i>
+                {% if is_fa %}شروع سریع{% else %}QUICK START{% endif %}
+              </div>
+              <h2 class="section-title">
+                {% if is_fa %}راه‌اندازی در چند دقیقه{% else %}Get Started in Minutes{% endif %}
+              </h2>
+              <p class="section-desc mb-4">
+                {% if is_fa %}
+                  مسابقه CTF خود را فقط در چند گام ساده برپا کنید و شرکت‌کنندگان را به رقابت دعوت نمایید.
+                {% else %}
+                  Set up your first CTF in just a few steps and start challenging your team or community.
+                {% endif %}
+              </p>
+
+              <div class="steps-list">
+                <div class="step-item">
+                  <div class="step-num">1</div>
+                  <div>
+                    <h4 class="step-title">{% if is_fa %}کلون کردن مخزن{% else %}Clone{% endif %}</h4>
+                    <p class="step-desc">{% if is_fa %}دریافت آخرین نسخه کد پروژه از گیت‌هاب.{% else %}Get the CTFd repository.{% endif %}</p>
+                  </div>
+                </div>
+
+                <div class="step-item">
+                  <div class="step-num">2</div>
+                  <div>
+                    <h4 class="step-title">{% if is_fa %}نصب پیش‌نیازها{% else %}Install{% endif %}</h4>
+                    <p class="step-desc">{% if is_fa %}نصب کتابخانه‌ها و آماده‌سازی وابستگی‌ها.{% else %}Install dependencies and setup.{% endif %}</p>
+                  </div>
+                </div>
+
+                <div class="step-item">
+                  <div class="step-num">3</div>
+                  <div>
+                    <h4 class="step-title">{% if is_fa %}پیکربندی محیط{% else %}Configure{% endif %}</h4>
+                    <p class="step-desc">{% if is_fa %}تنظیم متغیرها و دیتابیس مسابقه.{% else %}Set up your environment.{% endif %}</p>
+                  </div>
+                </div>
+
+                <div class="step-item">
+                  <div class="step-num">4</div>
+                  <div>
+                    <h4 class="step-title">{% if is_fa %}اجرا و شروع رقابت{% else %}Run{% endif %}</h4>
+                    <p class="step-desc">{% if is_fa %}اجرای سامانه و آغاز برگزاری چالش‌ها.{% else %}Launch the platform and start your CTF.{% endif %}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. STATISTICS SECTION -->
+      <section class="stats-section">
+        <div class="container text-center">
+          <div class="ctf-pill-tag">
+            <i class="fas fa-chart-line"></i>
+            {% if is_fa %}آمارها{% else %}STATISTICS{% endif %}
+          </div>
+          <h2 class="section-title">
+            {% if is_fa %}مورد اعتماد در سراسر جهان{% else %}Trusted Worldwide{% endif %}
+          </h2>
+          <p class="section-desc mx-auto mb-5">
+            {% if is_fa %}
+              از تیم‌های کوچک تا بزرگترین سازمان‌های بین‌المللی، مسابقات خود را روی CTFd برگزار می‌کنند.
+            {% else %}
+              From small teams to large organizations, CTFd powers CTF events around the world.
+            {% endif %}
+          </p>
+
+          <div class="row g-4">
+            <div class="col-md-3 col-6">
+              <div class="stat-card">
+                <i class="fas fa-server stat-icon"></i>
+                <div class="stat-number">1.2k+</div>
+                <div class="stat-label">{% if is_fa %}نصب فعال{% else %}Active Installations{% endif %}</div>
+              </div>
+            </div>
+            <div class="col-md-3 col-6">
+              <div class="stat-card">
+                <i class="fas fa-users stat-icon"></i>
+                <div class="stat-number">500+</div>
+                <div class="stat-label">{% if is_fa %}مشارکت‌کننده{% else %}Contributors{% endif %}</div>
+              </div>
+            </div>
+            <div class="col-md-3 col-6">
+              <div class="stat-card">
+                <i class="fas fa-building stat-icon"></i>
+                <div class="stat-number">200+</div>
+                <div class="stat-label">{% if is_fa %}سازمان و دانشگاه{% else %}Organizations{% endif %}</div>
+              </div>
+            </div>
+            <div class="col-md-3 col-6">
+              <div class="stat-card">
+                <i class="fas fa-flag stat-icon"></i>
+                <div class="stat-number">50k+</div>
+                <div class="stat-label">{% if is_fa %}چالش حل‌شده{% else %}Challenges{% endif %}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6. USER CASES SECTION -->
+      <section class="usercases-section">
+        <div class="container">
+          <div class="text-center mb-5">
+            <div class="ctf-pill-tag">
+              <i class="fas fa-user-check"></i>
+              {% if is_fa %}کاربردها{% else %}USER CASES{% endif %}
+            </div>
+            <h2 class="section-title">
+              {% if is_fa %}مناسب برای هر سناریو{% else %}Perfect for Every Scenario{% endif %}
+            </h2>
+            <p class="section-desc mx-auto">
+              {% if is_fa %}
+                چه مدرس باشید، چه دانشجو و چه یک سازمان بزرگ، CTFd نیازهای شما را برآورده می‌کند.
+              {% else %}
+                Whether you're an educator, a student, or an organization, CTFd fits your needs.
+              {% endif %}
+            </p>
+          </div>
+
+          <div class="row g-4 align-items-stretch">
+            <div class="col-lg-4 col-md-6">
+              <div class="usecase-card">
+                <div class="icon-box"><i class="fas fa-graduation-cap"></i></div>
+                <h3 class="card-title">{% if is_fa %}آموزش و پژوهش{% else %}Education{% endif %}</h3>
+                <p class="card-desc">
+                  {% if is_fa %}آموزش جذاب و عملی امنیت سایبری در محیطی تعاملی و پرانرژی.{% else %}Teach cybersecurity in an interactive and fun way.{% endif %}
+                </p>
+              </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+              <div class="usecase-card">
+                <div class="icon-box"><i class="fas fa-user-shield"></i></div>
+                <h3 class="card-title">{% if is_fa %}تیم‌ها و گروه‌ها{% else %}Teams{% endif %}</h3>
+                <p class="card-desc">
+                  {% if is_fa %}تمرین مستمر مهارت‌ها و رقابت تیمی در هر زمان و مکان.{% else %}Build and practice with your team, anytime.{% endif %}
+                </p>
+              </div>
+            </div>
+
+            <div class="col-lg-4 col-md-12">
+              <div class="usecase-card">
+                <div class="icon-box"><i class="fas fa-landmark"></i></div>
+                <h3 class="card-title">{% if is_fa %}سازمان‌ها و شرکت‌ها{% else %}Organizations{% endif %}</h3>
+                <p class="card-desc">
+                  {% if is_fa %}برگزاری مسابقات سراسری عمومی و مانورهای امنیتی درون‌سازمانی.{% else %}Host public or private CTF competitions.{% endif %}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7. TESTIMONIALS SECTION -->
+      <section class="testimonials-section">
+        <div class="container">
+          <div class="text-center mb-5">
+            <div class="ctf-pill-tag">
+              <i class="fas fa-quote-left"></i>
+              {% if is_fa %}دیدگاه‌ها{% else %}TESTIMONIALS{% endif %}
+            </div>
+            <h2 class="section-title">
+              {% if is_fa %}آنچه کاربران می‌گویند{% else %}What People Say{% endif %}
+            </h2>
+            <p class="section-desc mx-auto">
+              {% if is_fa %}
+                مورد اعتماد مدرسان، شرکت‌کنندگان و متخصصان امنیت سراسر جهان.
+              {% else %}
+                Trusted by educators, students, and professionals around the world.
+              {% endif %}
+            </p>
+          </div>
+
+          <div class="row g-4">
+            <div class="col-lg-4 col-md-6">
+              <div class="testimonial-card">
+                <div class="quote-mark"><i class="fas fa-quote-left"></i></div>
+                <p class="quote-text">
+                  {% if is_fa %}
+                    استقرار CTFd فوق‌العاده ساده است، رابطی کاربرپسند دارد و تمام نیازهای رویداد ما را پوشش می‌دهد.
+                  {% else %}
+                    CTFd is simple to deploy, easy to use, and has everything we need for our CTF events.
+                  {% endif %}
+                </p>
+                <div class="author-info">
+                  <div class="avatar-circle">SJ</div>
+                  <div>
+                    <h5 class="author-name">Sarah Johnson</h5>
+                    <p class="author-role">{% if is_fa %}مدرس امنیت سایبری{% else %}Security Educator{% endif %}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+              <div class="testimonial-card">
+                <div class="quote-mark"><i class="fas fa-quote-left"></i></div>
+                <p class="quote-text">
+                  {% if is_fa %}
+                    بهترین سامانه متن‌باز فتح پرچم. بسیار انعطاف‌پذیر، مدرن و مداوم در حال پیشرفت است.
+                  {% else %}
+                    The best open-source CTF platform out there. It's flexible, modern, and constantly improving.
+                  {% endif %}
+                </p>
+                <div class="author-info">
+                  <div class="avatar-circle">MC</div>
+                  <div>
+                    <h5 class="author-name">Michael Chen</h5>
+                    <p class="author-role">{% if is_fa %}برگزارکننده مسابقات{% else %}CTF Organizer{% endif %}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-4 col-md-12">
+              <div class="testimonial-card">
+                <div class="quote-mark"><i class="fas fa-quote-left"></i></div>
+                <p class="quote-text">
+                  {% if is_fa %}
+                    ما از CTFd برای تمرینات درون‌سازمانی استفاده می‌کنیم و این سامانه تحولی چشمگیر در مهارت‌های تیم ما ایجاد کرد.
+                  {% else %}
+                    We use CTFd for our internal training and it has been a game changer for our team.
+                  {% endif %}
+                </p>
+                <div class="author-info">
+                  <div class="avatar-circle">EC</div>
+                  <div>
+                    <h5 class="author-name">Emily Carter</h5>
+                    <p class="author-role">{% if is_fa %}مدیر ارشد فناوری، CyberSphere{% else %}CTO, CyberSphere{% endif %}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 8. CTA BANNER -->
+      <section class="cta-section">
+        <div class="container">
+          <div class="cta-banner">
+            <div class="cta-content">
+              <i class="fas fa-flag cta-icon"></i>
+              <h2 class="cta-title">
+                {% if is_fa %}آماده شروع هستید؟{% else %}Ready to get started?{% endif %}
+              </h2>
+              <p class="cta-desc">
+                {% if is_fa %}
+                  به هزاران سازمان، دانشگاه و علاقه‌مند امنیت بپیوندید و رقابت فتح پرچم خود را همین امروز راه‌اندازی کنید.
+                {% else %}
+                  Join thousands of organizations and individuals using CTFd to build, learn, and compete.
+                {% endif %}
+              </p>
+            </div>
+            <div class="cta-actions">
+              {% if authed() %}
+                <a href="{{ url_for('challenges.listing') }}" class="btn btn-primary px-4 py-2">
+                  {% if is_fa %}مشاهده چالش‌ها{% else %}Go to Challenges{% endif %} <i class="fas fa-arrow-right ms-2"></i>
+                </a>
+              {% else %}
+                <a href="{{ url_for('auth.register') if registration_visible() else url_for('auth.login') }}" class="btn btn-primary px-4 py-2">
+                  {% if is_fa %}شروع کنید{% else %}Get Started{% endif %} <i class="fas fa-arrow-right ms-2"></i>
+                </a>
+                <span class="cta-note">{% if is_fa %}رایگان و کاملاً متن‌باز{% else %}It's free and open source.{% endif %}</span>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {# If admin customized the index page with non-default content, render it #}
+      {% if content and 'Click here</a> to login and setup your CTF' not in content %}
+        <div class="container ctf-page-content mt-4">
+          <div class="ctf-card">
+            {{ content | safe }}
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  {% else %}
+    <div class="container ctf-page-content">
+      <div class="ctf-card">
+        {{ content | safe }}
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}

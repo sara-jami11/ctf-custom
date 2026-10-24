@@ -1,0 +1,149 @@
+{%- set ui_lang = get_locale() or 'en' -%}
+<!DOCTYPE html>
+<html lang="{{ ui_lang | replace('_', '-') }}" dir="{{ 'rtl' if ui_lang in ['fa', 'ar', 'he'] else 'ltr' }}">
+<head>
+  <title>{{ title or Configs.ctf_name }}</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="{{ Configs.ctf_small_icon }}" type="image/x-icon">
+
+  {{ meta | safe }}
+
+  {% block stylesheets %}
+    {{ Assets.css("assets/scss/main.scss") }}
+  {% endblock %}
+
+  {{ Plugins.styles }}
+
+  {{ Assets.js("assets/js/color_mode_switcher.js", type=None) }}
+
+  {# Persian is the default language. On a first visit (no language chosen yet, and no
+     language stored on the account) remember Persian and reload once so the server
+     renders the Persian interface. Choosing a language later always takes precedence. #}
+  <script type="text/javascript">
+    (function () {
+      try {
+        var hasChoice = document.cookie.indexOf("language=") !== -1 || {{ (User.language or '') | tojson }} !== "";
+        if (!hasChoice && !sessionStorage.getItem("ctf-language-init")) {
+          sessionStorage.setItem("ctf-language-init", "1");
+          document.cookie = "language=fa;path=/;max-age=31536000;SameSite=Lax";
+          if (document.cookie.indexOf("language=fa") !== -1 && {{ ui_lang | tojson }} !== "fa") {
+            window.location.reload();
+          }
+        }
+      } catch (e) {}
+    })();
+  </script>
+
+  <script type="text/javascript">
+      window.init = {
+          'urlRoot': "{{ request.script_root }}",
+          'csrfNonce': "{{ Session.nonce }}",
+          'userMode': "{{ Configs.user_mode }}",
+          'userId': {{ Session.id }},
+          'userName': {{ User.name | tojson }},
+          'userEmail': {{ User.email | tojson }},
+          'userVerified': {{ User.verified | tojson }},
+          'teamId': {{ Team.id | tojson }},
+          'teamName': {{ Team.name | tojson }},
+          'start': {{ Configs.start | tojson }},
+          'end': {{ Configs.end | tojson }},
+          'themeSettings': {{ Configs.theme_settings | tojson }},
+          'eventSounds': [
+            "/themes/core/static/sounds/notification.webm",
+            "/themes/core/static/sounds/notification.mp3",
+          ],
+      }
+  </script>
+
+  {{ Configs.theme_header }}
+</head>
+<body>
+{% include "components/navbar.html" %}
+
+<main role="main">
+  {% block content %}
+  {% endblock %}
+</main>
+
+{% include "components/snackbar.html" %}
+
+<footer class="footer ctf-footer mt-auto">
+  <div class="container py-5">
+    <div class="row g-4 text-start">
+      <div class="col-lg-4 col-md-6">
+        <a href="{{ url_for('views.static_html', route='/') }}" class="d-inline-flex align-items-center gap-2 text-decoration-none mb-3">
+          {% if Configs.ctf_logo %}
+            <img class="img-responsive" src="{{ url_for('views.files', path=Configs.ctf_logo) }}" alt="{{ Configs.ctf_name }}" height="25">
+          {% else %}
+            <i class="fas fa-shield-halved text-primary fa-xl"></i>
+            <span class="h5 mb-0 fw-bold">{{ Configs.ctf_name }}</span>
+          {% endif %}
+        </a>
+        <p class="text-muted mb-4 small">
+          {% trans %}Open source platform for Capture The Flag competitions.{% endtrans %}
+        </p>
+        <div class="d-flex gap-3 text-muted">
+          <a href="https://github.com/ctfd/ctfd" target="_blank" rel="noopener" class="text-muted"><i class="fab fa-github fa-lg"></i></a>
+          <a href="https://twitter.com/ctfdio" target="_blank" rel="noopener" class="text-muted"><i class="fab fa-twitter fa-lg"></i></a>
+          <a href="https://linkedin.com/company/ctfd" target="_blank" rel="noopener" class="text-muted"><i class="fab fa-linkedin fa-lg"></i></a>
+          <a href="https://discord.gg/ctfd" target="_blank" rel="noopener" class="text-muted"><i class="fab fa-discord fa-lg"></i></a>
+        </div>
+      </div>
+
+      <div class="col-lg-2 col-md-3 col-6">
+        <h6 class="fw-bold mb-3">{% trans %}Quick Links{% endtrans %}</h6>
+        <ul class="list-unstyled mb-0 d-flex flex-column gap-2 small">
+          <li><a href="{{ url_for('views.static_html', route='/') }}" class="text-muted text-decoration-none">{% trans %}Home{% endtrans %}</a></li>
+          <li><a href="{{ url_for('challenges.listing') }}" class="text-muted text-decoration-none">{% trans %}Challenges{% endtrans %}</a></li>
+          {% if Configs.score_visibility != 'admins' %}
+            <li><a href="{{ url_for('scoreboard.listing') }}" class="text-muted text-decoration-none">{% trans %}Scoreboard{% endtrans %}</a></li>
+          {% endif %}
+          {% if Configs.account_visibility != 'admins' %}
+            <li><a href="{{ url_for('users.listing') }}" class="text-muted text-decoration-none">{% trans %}Users{% endtrans %}</a></li>
+          {% endif %}
+        </ul>
+      </div>
+
+      <div class="col-lg-3 col-md-3 col-6">
+        <h6 class="fw-bold mb-3">{% trans %}Resources{% endtrans %}</h6>
+        <ul class="list-unstyled mb-0 d-flex flex-column gap-2 small">
+          <li><a href="https://docs.ctfd.io" target="_blank" rel="noopener" class="text-muted text-decoration-none">{% trans %}Documentation{% endtrans %}</a></li>
+          <li><a href="https://ctfd.io" target="_blank" rel="noopener" class="text-muted text-decoration-none">{% trans %}Powered by CTFd{% endtrans %}</a></li>
+          <li><a href="https://github.com/ctfd/ctfd" target="_blank" rel="noopener" class="text-muted text-decoration-none">{% trans %}Community{% endtrans %}</a></li>
+          <li><a href="https://ctfd.io/contact" target="_blank" rel="noopener" class="text-muted text-decoration-none">{% trans %}Support{% endtrans %}</a></li>
+        </ul>
+      </div>
+
+      <div class="col-lg-3 col-md-12">
+        <h6 class="fw-bold mb-3">{% trans %}About{% endtrans %}</h6>
+        <p class="text-muted small">
+          {% trans %}Empowering cybersecurity learning through competitions, labs, and interactive challenges worldwide.{% endtrans %}
+        </p>
+      </div>
+    </div>
+
+    <hr class="border-secondary my-4 opacity-25">
+
+    <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center gap-3 text-muted small">
+      <div>
+        &copy; 2026 {{ Configs.ctf_name }}. {% trans %}All rights reserved.{% endtrans %}
+      </div>
+      <div class="d-flex gap-3">
+        <a href="https://ctfd.io" target="_blank" rel="noopener" class="text-muted text-decoration-none">{% trans %}Powered by CTFd{% endtrans %}</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+{% include "components/notifications.html" %}
+
+{% block scripts %}
+  {{ Assets.js("assets/js/page.js") }}
+{% endblock %}
+
+{{ Plugins.scripts }}
+
+{{ Configs.theme_footer }}
+</body>
+</html>

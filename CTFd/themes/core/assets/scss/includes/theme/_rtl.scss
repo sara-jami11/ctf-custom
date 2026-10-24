@@ -1,0 +1,44 @@
+// Persian / RTL specifics
+// -------------------------------------------------
+// Direction-sensitive properties are mirrored automatically by postcss-rtlcss
+// (see postcss.config.js). Only behaviour that cannot be derived from the LTR
+// source lives here.
+
+[dir="rtl"] {
+  // Arabic-script letters must stay joined: never letter-space them
+  *,
+  *::before,
+  *::after {
+    letter-spacing: 0 !important;
+  }
+
+  body {
+    line-height: 1.85;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    line-height: 1.5;
+  }
+
+  // Directional icons point the other way
+  .fa-sign-in-alt,
+  .fa-sign-out-alt,
+  .fa-chevron-right,
+  .fa-chevron-left,
+  .fa-arrow-right,
+  .fa-arrow-left,
+  .fa-angle-right,
+  .fa-angle-left {
+    transform: scaleX(-1);
+  }
+}
+
+// Selects need room for the arrow regardless of the global input padding
+.form-select {
+  padding-inline-end: 2.25rem !important;
+}

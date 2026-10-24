@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<div class="jumbotron">
+		<div class="container">
+			<h1>
+				{% trans %}Notifications{% endtrans %}
+			</h1>
+		</div>
+	</div>
+	<div class="container">
+		{% if not notifications %}
+		<div class="row min-vh-25">
+			<div class="col-12 text-center my-auto">
+				<div class="ctf-card py-5">
+					<h3 class="opacity-50 text-center w-100 mb-0">
+						{% trans %}There are no notifications yet{% endtrans %}
+					</h3>
+				</div>
+			</div>
+		</div>
+		{% endif %}
+		{% for notification in notifications %}
+		<div class="ctf-card mb-4">
+			<h3 class="card-title text-primary mb-2">{{ notification.title }}</h3>
+			<div class="mb-0">
+				<div>{{ notification.html | safe }}</div>
+				<small class="text-muted d-block mt-2"><span data-time="{{ notification.date | isoformat }}"></span></small>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+{% endblock %}
+
+{% block scripts %}
+  {{ Assets.js("assets/js/notifications.js") }}
+{% endblock %}
+

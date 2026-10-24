@@ -1,0 +1,55 @@
+@use "bootstrap/scss/bootstrap" as * with (
+  $info: #5c728f
+);
+
+@use "includes/components/table";
+@use "includes/components/jumbotron";
+@use "includes/components/challenge";
+@use "includes/components/sticky-footer";
+@use "includes/components/graphs";
+
+@use "includes/utils/fonts";
+@use "includes/utils/opacity";
+@use "includes/utils/min-height";
+@use "includes/utils/cursors";
+@use "includes/utils/lolight";
+
+@use "includes/icons/award-icons";
+@use "includes/icons/flag-icons";
+
+@use "includes/theme/tokens";
+@use "includes/theme/layout";
+@use "includes/theme/components";
+@use "includes/theme/landing";
+@use "includes/theme/rtl";
+
+a {
+  text-decoration: none !important;
+}
+
+blockquote {
+  border-left: 4px solid var(--ctf-primary);
+  padding-left: 15px;
+  color: var(--ctf-muted);
+}
+
+input,
+select {
+  padding: 0.6rem !important;
+  height: auto !important;
+}
+
+.fa-spin.spinner {
+  text-align: center;
+  opacity: 0.5;
+}
+
+.badge-notification {
+  vertical-align: top;
+  margin-left: -1.5em;
+  font-size: 50%;
+}
+
+.form-select {
+  background-size: 8px 10px;
+}

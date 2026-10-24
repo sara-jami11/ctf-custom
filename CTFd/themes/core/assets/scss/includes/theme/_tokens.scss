@@ -1,0 +1,171 @@
+// CTFd Design Tokens & Colors
+// =============================================================================
+
+@import "@fontsource-variable/inter/index.css";
+@import "@fontsource-variable/jetbrains-mono/index.css";
+
+// Typography: Vazirmatn Persian Font
+@font-face {
+  font-family: "Vazirmatn";
+  src:
+    url("../../fonts/Vazirmatn-wght.woff2") format("woff2-variations"),
+    url("../../fonts/Vazirmatn-wght.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+// -----------------------------------------------------------------------------
+// Root Theme Variables
+// -----------------------------------------------------------------------------
+:root,
+[data-bs-theme="dark"] {
+  // Brand palette (Dark Mode - Primary)
+  --ctf-bg: #000c1d;
+  --ctf-bg-rgb: 0, 12, 29;
+  --ctf-bg-2: #06182d;
+  --ctf-bg-2-rgb: 6, 24, 45;
+  --ctf-surface: #071b31;
+  --ctf-surface-rgb: 7, 27, 49;
+  --ctf-surface-2: #0b2442;
+  --ctf-primary: #00b8ff;
+  --ctf-primary-rgb: 0, 184, 255;
+  --ctf-primary-contrast: #000c1d;
+  --ctf-secondary: #087cfa;
+  --ctf-secondary-rgb: 8, 124, 250;
+  --ctf-text: #eaf4ff;
+  --ctf-text-rgb: 234, 244, 255;
+  --ctf-muted: #8faac8;
+  --ctf-muted-rgb: 143, 170, 200;
+  --ctf-border: #123b60;
+  --ctf-border-rgb: 18, 59, 96;
+
+  // Semantic
+  --ctf-success: #16b981;
+  --ctf-success-rgb: 22, 185, 129;
+  --ctf-warning: #f59e0b;
+  --ctf-warning-rgb: 245, 158, 11;
+  --ctf-error: #ef4444;
+  --ctf-error-rgb: 239, 68, 68;
+
+  // Effects & Shadows
+  --ctf-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
+  --ctf-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), 0 0 1px rgba(0, 184, 255, 0.25);
+  --ctf-shadow-hover: 0 12px 32px rgba(0, 0, 0, 0.5), 0 0 18px rgba(0, 184, 255, 0.35);
+  --ctf-glow: 0 0 20px rgba(0, 184, 255, 0.25);
+
+  // Bootstrap Overrides in Dark Mode
+  --bs-body-bg: var(--ctf-bg);
+  --bs-body-bg-rgb: var(--ctf-bg-rgb);
+  --bs-body-color: var(--ctf-text);
+  --bs-body-color-rgb: var(--ctf-text-rgb);
+  --bs-primary: var(--ctf-primary);
+  --bs-primary-rgb: var(--ctf-primary-rgb);
+  --bs-secondary: var(--ctf-secondary);
+  --bs-secondary-rgb: var(--ctf-secondary-rgb);
+  --bs-tertiary-bg: var(--ctf-bg-2);
+  --bs-tertiary-bg-rgb: var(--ctf-bg-2-rgb);
+  --bs-secondary-bg: var(--ctf-surface);
+  --bs-card-bg: var(--ctf-surface);
+  --bs-card-border-color: var(--ctf-border);
+  --bs-card-color: var(--ctf-text);
+  --bs-border-color: var(--ctf-border);
+  --bs-link-color: var(--ctf-primary);
+  --bs-link-hover-color: #4cd4ff;
+  --bs-heading-color: var(--ctf-text);
+  --bs-modal-bg: var(--ctf-surface);
+  --bs-modal-border-color: var(--ctf-border);
+  --bs-modal-header-border-color: var(--ctf-border);
+  --bs-modal-footer-border-color: var(--ctf-border);
+  --bs-dropdown-bg: var(--ctf-surface);
+  --bs-dropdown-border-color: var(--ctf-border);
+  --bs-dropdown-link-color: var(--ctf-text);
+  --bs-dropdown-link-hover-bg: var(--ctf-bg-2);
+  --bs-dropdown-link-hover-color: var(--ctf-primary);
+  --bs-nav-link-color: var(--ctf-muted);
+  --bs-nav-link-hover-color: var(--ctf-text);
+}
+
+[data-bs-theme="light"] {
+  // Brand palette (Light Mode - Alternative)
+  --ctf-bg: #fafcfe;
+  --ctf-bg-rgb: 250, 252, 254;
+  --ctf-bg-2: #f2f7fc;
+  --ctf-bg-2-rgb: 242, 247, 252;
+  --ctf-surface: #ffffff;
+  --ctf-surface-rgb: 255, 255, 255;
+  --ctf-surface-2: #e8f1fa;
+  --ctf-primary: #087cfa;
+  --ctf-primary-rgb: 8, 124, 250;
+  --ctf-primary-contrast: #ffffff;
+  --ctf-secondary: #00b8ff;
+  --ctf-secondary-rgb: 0, 184, 255;
+  --ctf-text: #102746;
+  --ctf-text-rgb: 16, 39, 70;
+  --ctf-muted: #68819e;
+  --ctf-muted-rgb: 104, 129, 158;
+  --ctf-border: #dce8f5;
+  --ctf-border-rgb: 220, 232, 245;
+
+  // Semantic
+  --ctf-success: #16b981;
+  --ctf-success-rgb: 22, 185, 129;
+  --ctf-warning: #f59e0b;
+  --ctf-warning-rgb: 245, 158, 11;
+  --ctf-error: #ef4444;
+  --ctf-error-rgb: 239, 68, 68;
+
+  // Effects & Shadows
+  --ctf-shadow-sm: 0 2px 6px rgba(16, 39, 70, 0.05);
+  --ctf-shadow: 0 6px 20px rgba(16, 39, 70, 0.07), 0 1px 3px rgba(16, 39, 70, 0.04);
+  --ctf-shadow-hover:
+    0 12px 28px rgba(8, 124, 250, 0.12), 0 2px 8px rgba(8, 124, 250, 0.06);
+  --ctf-glow: 0 0 20px rgba(8, 124, 250, 0.18);
+
+  // Bootstrap Overrides in Light Mode
+  --bs-body-bg: var(--ctf-bg);
+  --bs-body-bg-rgb: var(--ctf-bg-rgb);
+  --bs-body-color: var(--ctf-text);
+  --bs-body-color-rgb: var(--ctf-text-rgb);
+  --bs-primary: var(--ctf-primary);
+  --bs-primary-rgb: var(--ctf-primary-rgb);
+  --bs-secondary: var(--ctf-secondary);
+  --bs-secondary-rgb: var(--ctf-secondary-rgb);
+  --bs-tertiary-bg: var(--ctf-bg-2);
+  --bs-tertiary-bg-rgb: var(--ctf-bg-2-rgb);
+  --bs-secondary-bg: var(--ctf-surface);
+  --bs-card-bg: var(--ctf-surface);
+  --bs-card-border-color: var(--ctf-border);
+  --bs-card-color: var(--ctf-text);
+  --bs-border-color: var(--ctf-border);
+  --bs-link-color: var(--ctf-primary);
+  --bs-link-hover-color: #0662c7;
+  --bs-heading-color: var(--ctf-text);
+  --bs-modal-bg: var(--ctf-surface);
+  --bs-modal-border-color: var(--ctf-border);
+  --bs-modal-header-border-color: var(--ctf-border);
+  --bs-modal-footer-border-color: var(--ctf-border);
+  --bs-dropdown-bg: var(--ctf-surface);
+  --bs-dropdown-border-color: var(--ctf-border);
+  --bs-dropdown-link-color: var(--ctf-text);
+  --bs-dropdown-link-hover-bg: var(--ctf-bg-2);
+  --bs-dropdown-link-hover-color: var(--ctf-primary);
+  --bs-nav-link-color: var(--ctf-muted);
+  --bs-nav-link-hover-color: var(--ctf-text);
+}
+
+// Global Geometry Tokens
+:root {
+  --ctf-radius-sm: 8px;
+  --ctf-radius: 12px;
+  --ctf-radius-lg: 16px;
+  --ctf-radius-pill: 9999px;
+
+  --ctf-font-sans:
+    "Inter Variable", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
+  --ctf-font-mono:
+    "JetBrains Mono Variable", "JetBrains Mono", SFMono-Regular, Menlo, Monaco,
+    Consolas, monospace;
+  --ctf-font-fa: "Vazirmatn", var(--ctf-font-sans);
+}

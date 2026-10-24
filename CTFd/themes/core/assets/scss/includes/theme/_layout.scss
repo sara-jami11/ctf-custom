@@ -1,0 +1,143 @@
+// Layout and Base Structure
+// =============================================================================
+
+html,
+body {
+  background-color: var(--ctf-bg);
+  color: var(--ctf-text);
+  font-family: var(--ctf-font-sans);
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+[dir="rtl"],
+[lang="fa"] {
+  font-family: var(--ctf-font-fa);
+}
+
+code,
+pre,
+kbd,
+samp {
+  font-family: var(--ctf-font-mono) !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--ctf-text);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+// Navbar Styling
+.ctf-navbar {
+  background-color: rgba(var(--ctf-bg-rgb), 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--ctf-border);
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+  z-index: 1030;
+
+  .navbar-brand {
+    font-weight: 800;
+    font-size: 1.25rem;
+    letter-spacing: -0.02em;
+    color: var(--ctf-text);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    &:hover {
+      color: var(--ctf-primary);
+    }
+  }
+
+  .nav-link {
+    color: var(--ctf-muted);
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 0.5rem 0.85rem;
+    border-radius: var(--ctf-radius-sm);
+    transition:
+      color 0.15s ease,
+      background-color 0.15s ease;
+
+    &:hover,
+    &:focus {
+      color: var(--ctf-text);
+      background-color: rgba(var(--ctf-primary-rgb), 0.08);
+    }
+
+    &.active {
+      color: var(--ctf-primary);
+      background-color: rgba(var(--ctf-primary-rgb), 0.12);
+      font-weight: 600;
+    }
+  }
+
+  .navbar-toggler {
+    border-color: var(--ctf-border);
+    color: var(--ctf-text);
+
+    &:focus {
+      box-shadow: 0 0 0 2px var(--ctf-primary);
+    }
+  }
+}
+
+// Jumbotron / Hero Header
+.jumbotron {
+  background: radial-gradient(circle at 50% 0%, var(--ctf-bg-2) 0%, var(--ctf-bg) 100%);
+  border-bottom: 1px solid var(--ctf-border);
+  padding: 3.5rem 1rem 2.5rem;
+  margin-bottom: 2rem;
+  text-align: center;
+
+  h1 {
+    font-weight: 800;
+    font-size: clamp(2rem, 4vw, 3rem);
+    letter-spacing: -0.03em;
+    margin-bottom: 0.5rem;
+  }
+
+  h2 {
+    font-size: 1.15rem;
+    color: var(--ctf-muted);
+    font-weight: 400;
+  }
+}
+
+// Page Content wrapper
+.ctf-page-content {
+  padding-top: 1.5rem;
+  padding-bottom: 3rem;
+  min-height: calc(100vh - 180px);
+}
+
+// Footer Styling
+.footer {
+  background-color: var(--ctf-bg-2);
+  border-top: 1px solid var(--ctf-border);
+  color: var(--ctf-muted);
+  padding: 1.5rem 0;
+  position: relative;
+  width: 100%;
+
+  a {
+    color: var(--ctf-muted);
+    transition: color 0.15s ease;
+
+    &:hover {
+      color: var(--ctf-primary);
+    }
+  }
+}
